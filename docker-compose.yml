@@ -8,13 +8,13 @@ services:
     command:   -advertise 35.198.86.51  -retry-join 35.157.253.101 -retry-join 52.59.153.218 -retry-join 35.157.178.106
     image: progrium/consul:latest
     ports:
-      -  "8500:8500"
-      -  "8300:8300"
-      -  "8400:8400"
-      -  "8301:8301"
-      -  "8301:8301/udp"
-      -  "8302:8302/udp"
-   restart: always
+      - "8500:8500"
+      - "8300:8300"
+      - "8400:8400"
+      - "8301:8301"
+      - "8301:8301/udp"
+      - "8302:8302/udp"
+    restart: always
 
   consul_notifier:
     image: aisaac/swarm-consul-notifier
