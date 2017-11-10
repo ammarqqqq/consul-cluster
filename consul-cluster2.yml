@@ -2,8 +2,8 @@ version: '3'
 
 services:
    consul2:
-     command: -server  -bootstrap-expect=3 -data-dir /tmp -client=0.0.0.0 -advertise 35.157.253.101
-     image: consul:latest
+     command: -server  -bootstrap-expect 3   -data-dir /tmp -client=0.0.0.0 -advertise 35.157.253.101  -retry-join 35.157.178.106 -retry-join 52.59.153.218
+     image: progrium/consul:latest
      ports:
        - "8300:8300"
        - "8400:8400"
