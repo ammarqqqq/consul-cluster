@@ -10,7 +10,7 @@ docker-compose down -v --remove-orphans
 #docker-compose run --rm start_dependencies
 
 #docker-compose  -f consul-cluster3.yml up  --force-recreate --build
-
-docker-compose  -f consul-cluster2.yml up  --force-recreate --build
+docker-compose -f docker-compose.yml up --force-recreate  --build
+#docker-compose  -f consul-cluster2.yml up  --force-recreate --build
 
 #docker-compose -f docker-compose.yml  -f docker-compose.blockchain.yml up --force-recreate --build
