@@ -1,0 +1,54 @@
+version: '3'
+
+volumes:
+   data:
+
+services:
+  consul-agent:
+    command: -server  -bootstrap-expect=3 -data-dir /tmp -client=0.0.0.0 -advertise 35.157.253.101
+    image: progrium/consul:latest
+    ports:
+      -  8500
+      -  8300
+      -  8400
+      -  8301
+      -  8301/udp
+      -  8302/udp
+    entrypoint:
+      - consul
+      - agent
+      - -node=  "bankinstance5-worker"
+      - -data-dir=  /data
+      #- -encrypt=<consul_encryption_key>
+      #- -datacenter=<datacenter_name>
+      - -retry-join=  35.157.178.106
+      - -retry-join=  35.157.253.101
+      - -retry-join=  52.59.153.218
+    restart: always
+
+  consul_notifier:
+    image: aisaac/swarm-consul-notifier
+    container_name: consul_notifier
+    network_mode: host
+    deploy:
+      placement:
+        constraints: [node.role == worker]
+    environment:
+      CONSUL_ADDR: 35.157.178.106
+      CONSUL_SERVICE_PORT: 8500
+    volumes:
+       - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
+    depends_on:
+      - consul-agent
+
+  #registrator:
+  #  command:  -ip= 35.198.86.51   consul://35.157.178.106:8500
+  #  image: gliderlabs/registrator:latest
+  #  links:
+  #    - consul-agent
+  #  volumes:
+  #    - "/var/run/docker.sock:/tmp/docker.sock"
+  #  restart: always
+  #  depends_on:
+  #    - consul-agent
