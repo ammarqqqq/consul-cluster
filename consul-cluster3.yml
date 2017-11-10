@@ -2,15 +2,15 @@ version: '3'
 
 services:
  consul3:
-  command: -server  -bootstrap-expect=3  -advertise 52.59.153.218
+  command: -server  -bootstrap-expect=3 -data-dir /tmp -client=0.0.0.0  -advertise 52.59.153.218
   image: consul:latest
   ports:
     - "8300:8300"
     - "8400:8400"
     - "8500:8500"
     - "8600:8600"
-    - "8301/udp:8301/udp"
-    - "8302/udp:8302/udp"
+    - "8301:8301/udp"
+    - "8302:8302/udp"
   network_mode: host
   environment:
     CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
@@ -23,7 +23,6 @@ registrator3:
     - consul3
   volumes:
     - "/var/run/docker.sock:/tmp/docker.sock"
-  network_mode: host
   restart: always
   depends_on:
     - consul3
@@ -36,7 +35,7 @@ consul_notifier3:
     CONSUL_ADDR: 52.59.153.218
     #CONSUL_SERVICE_PORT: 8500
   volumes:
-    - /var/run/docker.sock:/var/run/docker.sock
+    - "/var/run/docker.sock:/var/run/docker.sock"
   restart: always
   depends_on:
     - consul3

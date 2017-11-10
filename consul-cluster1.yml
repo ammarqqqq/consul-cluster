@@ -2,15 +2,15 @@ version: '3'
 
 services:
   consul1:
-    command: -server  -bootstrap-expect=3  -advertise 35.157.178.106
-    image: consul:latest
+    command: -server  -bootstrap-expect=3    -data-dir /tmp  -client=0.0.0.0 -advertise 35.157.178.106
+    image: progrium/consul:latest
     ports:
       - "8300:8300"
       - "8400:8400"
       - "8500:8500"
       - "8600:8600"
-      - "8301/udp:8301/udp"
-      - "8302/udp:8302/udp"
+      - "8301:8301/udp"
+      - "8302:8302/udp"
     environment:
       CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
     network_mode: host
@@ -23,12 +23,6 @@ services:
       - consul1
     volumes:
       - "/var/run/docker.sock:/tmp/docker.sock"
-    network_mode: host
-    deploy:
-      mode: replicated
-      replicas: 1
-      placement:
-        constraints: [node.hostname == ip-172-31-19-131]
     restart: always
     depends_on:
       - consul1
