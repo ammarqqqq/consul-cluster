@@ -1,5 +1,5 @@
-export DNSDOMAIN=local.monifair.com
-export DNSDOMAINIP=192.168.1.15  #change  with  ipaddress of Ubuntu machine
+export DNSDOMAIN=bankinstance3.monifair.com
+export DNSDOMAINIP= 35.157.178.106  #change  with  ipaddress of Ubuntu machine
 #docker-machine start default
 #docker-machine env
 #sleep 2

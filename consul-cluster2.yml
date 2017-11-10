@@ -31,10 +31,22 @@ services:
      image: aisaac/swarm-consul-notifier
      container_name: consul_notifier2
      environment:
-       CONSUL_ADDR: 35.157.253.101
+       CONSUL_ADDR: 10.156.0.2
        #CONSUL_SERVICE_PORT: 8500
      volumes:
        - /var/run/docker.sock:/var/run/docker.sock
      restart: always
      depends_on:
        - consul2
+
+   lb2:
+     build: ./lb_org
+     ports:
+        - "443"
+     environment:
+       CONSUL_URL: consul1:8500
+     restart: always
+     hostname: lb2
+     domainname: monifair.com
+     extra_hosts:
+       - "${DNSDOMAIN}:${DNSDOMAINIP}"
