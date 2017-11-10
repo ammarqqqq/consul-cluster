@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  consul1:
+    command: -server  -bootstrap-expect=3  -advertise 35.157.178.106
+    image: consul:latest
+    ports:
+      - "8300:8300"
+      - "8400:8400"
+      - "8500:8500"
+      - "8600:8600"
+      - "8301/udp:8301/udp"
+      - "8302/udp:8302/udp"
+    environment:
+      CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
+    network_mode: host
+    restart: always
+
+  registrator1:
+    command:  -ip=35.157.178.106 consul://consul1:8500
+    image: gliderlabs/registrator:latest
+    links:
+      - consul1
+    volumes:
+      - "/var/run/docker.sock:/tmp/docker.sock"
+    network_mode: host
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.hostname == ip-172-31-19-131]
+    restart: always
+    depends_on:
+      - consul1
+
+  consul_notifier1:
+    image: aisaac/swarm-consul-notifier
+    container_name: consul_notifier1
+    network_mode: host
+    environment:
+      CONSUL_ADDR: 35.157.178.106
+      #CONSUL_SERVICE_PORT: 8500
+    volumes:
+       - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
+    depends_on:
+       - consul1
