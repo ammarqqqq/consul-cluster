@@ -30,7 +30,6 @@ services:
   consul_notifier1:
     image: aisaac/swarm-consul-notifier
     container_name: consul_notifier1
-    network_mode: host
     environment:
       CONSUL_ADDR: 35.157.178.106
       #CONSUL_SERVICE_PORT: 8500
