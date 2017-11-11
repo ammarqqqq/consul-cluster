@@ -20,7 +20,7 @@ services:
     image: aisaac/swarm-consul-notifier
     container_name: consul_notifier
     environment:
-      CONSUL_ADDR: 35.157.178.106
+      CONSUL_ADDR:  35.198.86.51
       CONSUL_SERVICE_PORT: 8500
     volumes:
        - /var/run/docker.sock:/var/run/docker.sock
