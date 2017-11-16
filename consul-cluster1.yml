@@ -18,7 +18,7 @@ services:
 
 
   consul-agent1:
-   command: consul agent   -data-dir /tmp  -bind=52.57.99.89  -client=52.57.99.89
+   command: consul agent   -data-dir /tmp  -bind=172.31.22.85  -client=172.31.22.85 &
    image: progrium/consul:latest
    environment:
      CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
@@ -31,7 +31,7 @@ services:
     command:  -ip=52.57.99.89 consul://consul-agent1:8500
     image: gliderlabs/registrator:latest
     links:
-      - consul
+      - consul-agent1
     volumes:
       - "/var/run/docker.sock:/tmp/docker.sock"
     restart: always
