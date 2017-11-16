@@ -16,8 +16,26 @@ services:
      network_mode: host
      restart: always
 
+  consul-agent2:
+    command: -agent   -data-dir /tmp  -bind 52.48.82.32  -client 52.48.82.32
+    image: progrium/consul:latest
+    ports:
+      - "8300"
+      - "8400"
+      - "8500"
+      - "8600"
+      - "8301/udp"
+      - "8302/udp"
+    environment:
+      CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
+    network_mode: host
+    restart: always
+    depends_on:
+      - consul
+
+
    registrator2:
-     command:  -ip= 52.48.82.32 consul://consul:8500
+     command:  -ip= 52.48.82.32 consul://consul-agent2:8500
      image: gliderlabs/registrator:latest
      links:
        - consul
@@ -25,7 +43,7 @@ services:
        - "/var/run/docker.sock:/tmp/docker.sock"
      restart: always
      depends_on:
-       - consul
+       - consul-agent2
 
    lb2:
      build: ./lb_org

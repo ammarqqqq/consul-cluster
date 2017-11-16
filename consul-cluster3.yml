@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  consul3:
+  consul:
     command: -server  -bootstrap-expect 3  -data-dir /tmp -bind-addr 35.197.251.183  -advertise-addr 35.197.251.183  -retry-join 52.57.99.89 -retry-join 52.48.82.32
     image: progrium/consul:latest
     ports:
@@ -16,8 +16,26 @@ services:
       CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
     restart: always
 
+  consul-agent3:
+    command: -agent   -data-dir /tmp  -bind 35.197.251.183  -client 35.197.251.183
+    image: progrium/consul:latest
+    ports:
+      - "8300"
+      - "8400"
+      - "8500"
+      - "8600"
+      - "8301/udp"
+      - "8302/udp"
+    environment:
+      CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
+    network_mode: host
+    restart: always
+    depends_on:
+      - consul
+
+
   registrator3:
-    command:  -ip= 35.197.251.183 consul://consul:8500
+    command:  -ip= 35.197.251.183 consul://consul-agent3:8500
     image: gliderlabs/registrator:latest
     links:
       - consul
