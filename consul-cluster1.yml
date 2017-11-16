@@ -2,7 +2,7 @@ version: '3'
 
 services:
   consul:
-    command: -server -advertise 52.57.99.89 -bootstrap      -retry-join 52.48.82.32 -retry-join 35.197.251.183
+    command: -server -advertise 52.57.99.89 -bootstrap-expect 3     -retry-join 52.48.82.32 -retry-join 35.197.251.183
     image: progrium/consul:latest
     ports:
       - "8300:8300"
@@ -18,7 +18,7 @@ services:
 
 
   consul-agent1:
-   command: consul agent   -data-dir /tmp  -bind 52.57.99.89  -client 52.57.99.89
+   command: consul agent   -data-dir /tmp  -bind=52.57.99.89  -client=52.57.99.89
    image: progrium/consul:latest
    environment:
      CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
