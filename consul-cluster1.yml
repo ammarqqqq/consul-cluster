@@ -9,7 +9,7 @@ services:
       - "8400:8400"
       - "8500:8500"
       - "8500:8600"
-      #- "8301:8301/udp"
+      - "8301:8301/udp"
       - "8302:8302/udp"
     environment:
       CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
