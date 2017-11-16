@@ -9,15 +9,15 @@ services:
       - "8400"
       - "8500"
       - "8600"
-      - "8301/udp"
-      - "8302/udp"
+      - "8301:8301/udp"
+      - "8302:8302/udp"
     network_mode: host
     environment:
       CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
     restart: always
 
   consul-agent3:
-    command: -agent   -data-dir /tmp  -bind=35.197.251.183  -client=35.197.251.183
+    command: consul agent   -data-dir /tmp  -bind=35.197.251.183  -client=35.197.251.183
     image: progrium/consul:latest
     ports:
       - "8300"
