@@ -17,7 +17,7 @@ services:
      restart: always
 
   consul-agent2:
-    command: -agent   -data-dir /tmp  -bind 52.48.82.32  -client 52.48.82.32
+    command: -agent   -data-dir /tmp  -bind=52.48.82.32  -client=52.48.82.32
     image: progrium/consul:latest
     ports:
       - "8300"
