@@ -2,7 +2,7 @@ version: '3'
 
 services:
   consul:
-    command: -server  -bootstrap-expect 3    -data-dir /tmp -bind 52.57.99.89 -advertise 52.57.99.89 -retry-join 52.48.82.32 -retry-join 35.197.251.183
+    command: -server  -bootstrap-expect 3    -data-dir /tmp -bind 52.57.99.89  -advertise 52.57.99.89 -retry-join 52.48.82.32 -retry-join 35.197.251.183
     image: progrium/consul:latest
     ports:
       - "8300"
