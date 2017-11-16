@@ -2,7 +2,7 @@ version: '3'
 
 services:
    consul:
-     command: -server -advertise 52.48.82.32 -bootstrap-expect 3   -data-dir /tmp -client  52.48.82.32    -retry-join 52.57.99.89 -retry-join 35.197.251.183
+     command: -server -advertise 172.31.42.174 -bootstrap-expect 3   -data-dir /tmp -client  52.48.82.32    -retry-join 52.57.99.89 -retry-join 35.197.251.183
      image: progrium/consul:latest
      ports:
        - "8300:8300"
@@ -17,7 +17,7 @@ services:
      restart: always
 
    consul-agent2:
-     command: consul agent   -data-dir /tmp  -bind=52.48.82.32  -client=52.48.82.32
+     command: consul agent   -data-dir /tmp  -bind=172.31.42.174  -client=172.31.42.174
      image: progrium/consul:latest
      environment:
        CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
@@ -27,10 +27,10 @@ services:
          - consul
 
    registrator2:
-     command:  -ip= 52.48.82.32 consul://consul-agent2:8500
+     command:  -ip= 172.31.42.174 consul://consul-agent2:8500
      image: gliderlabs/registrator:latest
      links:
-       - consul
+       - consul-agent2
      volumes:
        - "/var/run/docker.sock:/tmp/docker.sock"
      restart: always
