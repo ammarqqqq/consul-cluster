@@ -2,7 +2,7 @@ version: '3'
 
 services:
   consul3:
-    command: -server  -bootstrap-expect 3  -data-dir /tmp -client  52.59.153.218  -advertise 52.59.153.218 -retry-join 35.157.178.106 -retry-join 35.157.253.101
+    command: -server  -bootstrap-expect 3  -data-dir /tmp -client 35.197.251.183   -advertise 35.197.251.183  -retry-join 52.57.99.89 -retry-join 52.48.82.32
     image: progrium/consul:latest
     ports:
       - "8300:8300"
@@ -27,16 +27,23 @@ services:
     depends_on:
       - consul3
 
-  consul_notifier3:
-    image: aisaac/swarm-consul-notifier
-    container_name: consul_notifier3
+  lb3:
+    build: ./lb_org
+    ports:
+      - "443:443"
     environment:
-      CONSUL_ADDR: 52.59.153.218
-      #CONSUL_SERVICE_PORT: 8500
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
+      CONSUL_URL: consul:8500
     restart: always
-    depends_on:
-      - consul3
+    hostname: lb3
+    domainname: monifair.com
+    extra_hosts:
+     - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
-  
+  elk3:
+    build: ./elk
+    ports:
+      - "5601:5601"
+      - "9200:9200"
+      - "5000:5000"
+      - "5044:5044"
+    restart: always
