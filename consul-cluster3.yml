@@ -36,8 +36,8 @@ services:
     restart: always
     hostname: lb3
     domainname: monifair.com
-    #extra_hosts:
-    #  - "${DNSDOMAIN}:${DNSDOMAINIP}"
+    extra_hosts:
+       - ${DNSDOMAIN}:${DNSDOMAINIP}
 
   elk3:
     build: ./elk
