@@ -2,7 +2,7 @@ version: '3'
 
 services:
    consul:
-     command: -server -advertise 52.48.82.32 -bootstrap-expect 3      -retry-join 52.57.99.89 -retry-join 35.197.251.183
+     command: -server  -bootstrap-expect 3   -advertise 52.48.82.32   -retry-join 52.57.99.89 -retry-join 35.197.251.183
      image: progrium/consul:latest
      container_name: consul
      ports:
@@ -18,17 +18,24 @@ services:
      restart: always
 
    consul-agent:
-     command: consul agent   -data-dir /tmp  -advertise 172.31.42.174 -bind 172.31.42.174 -client 172.31.42.174 &
+     command: consul agent   -data-dir /tmp  -bind 172.31.42.174 -client 172.31.42.174 &
      image: progrium/consul:latest
      container_name: consul-agent
+     ports:
+       - "172.31.42.174:8300"
+       - "172.31.42.174:8400"
+       - "172.31.42.174:8500"
+       - "172.31.42.174:8600"
+       - "172.31.42.174:8301/udp"
+       - "172.31.42.174:8302/udp"
      environment:
        CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
        CONSUL_CLIENT_INTERFACE: eth0
        CONSUL_BIND_INTERFACE: eth0
      network_mode: host
      restart: always
-     depends_on:
-         - consul
+     links:
+       - consul
 
    registrator:
      command:  -ip=172.31.42.174 consul://consul-agent:8500

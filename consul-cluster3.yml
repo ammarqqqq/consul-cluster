@@ -21,13 +21,20 @@ services:
     command: consul agent   -data-dir /tmp   -bind 10.154.0.3 -client 10.154.0.3 &
     image: progrium/consul:latest
     container_name: consul-agent
+    ports:
+      - "10.154.0.3:8300"
+      - "10.154.0.3:8400"
+      - "10.154.0.3:8500"
+      - "10.154.0.3:8600"
+      - "10.154.0.3:8301/udp"
+      - "10.154.0.3:8302/udp"
     environment:
       CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
       CONSUL_CLIENT_INTERFACE: eth0
       CONSUL_BIND_INTERFACE: eth0
     network_mode: host
     restart: always
-    depends_on:
+    links:
       - consul
 
 
