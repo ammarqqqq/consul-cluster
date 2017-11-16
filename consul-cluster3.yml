@@ -17,7 +17,7 @@ services:
     restart: always
 
   registrator3:
-    command:  -ip= 52.59.153.218 consul://consul3:8500
+    command:  -ip= 35.197.251.183 consul://consul3:8500
     image: gliderlabs/registrator:latest
     links:
       - consul3
