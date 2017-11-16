@@ -37,7 +37,7 @@ lb2:
     hostname: lb2
     domainname: monifair.com
     extra_hosts:
-     - "${DNSDOMAIN}:${DNSDOMAINIP}"
+     - ${DNSDOMAIN}:${DNSDOMAINIP}
 
 elk2:
   build: ./elk
