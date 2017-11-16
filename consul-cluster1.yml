@@ -2,7 +2,7 @@ version: '3'
 
 services:
   consul:
-    command: -server -advertise 172.31.22.85 -bootstrap     -retry-join 52.48.82.32 -retry-join 35.197.251.183
+    command: -server -advertise 52.57.99.89 -bootstrap-expect 3     -retry-join 52.48.82.32 -retry-join 35.197.251.183
     image: progrium/consul:latest
     ports:
       - "8300:8300"
@@ -22,13 +22,15 @@ services:
    image: progrium/consul:latest
    environment:
      CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
+     CONSUL_CLIENT_INTERFACE: eth0
+     CONSUL_BIND_INTERFACE: eth0
    network_mode: host
    restart: always
    depends_on:
      - consul
 
   registrator1:
-    command:  -ip=172.31.22.85 consul://consul-agent1:8500
+    command:  -ip=52.57.99.89 consul://consul-agent1:8500
     image: gliderlabs/registrator:latest
     links:
       - consul-agent1
