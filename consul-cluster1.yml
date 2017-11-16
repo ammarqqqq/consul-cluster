@@ -2,7 +2,7 @@ version: '3'
 
 services:
   consul:
-    command: -server -advertise 172.31.22.85 -bootstrap-expect 3     -retry-join 52.48.82.32 -retry-join 35.197.251.183
+    command: -server -advertise 172.31.22.85 -bootstrap     -retry-join 52.48.82.32 -retry-join 35.197.251.183
     image: progrium/consul:latest
     ports:
       - "8300:8300"
