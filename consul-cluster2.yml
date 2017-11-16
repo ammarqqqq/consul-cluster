@@ -2,22 +2,22 @@ version: '3'
 
 services:
    consul2:
-     command: -server  -bootstrap-expect 3   -data-dir /tmp -client 52.48.82.32 -advertise 52.48.82.32  -retry-join 52.57.99.89 -retry-join 35.197.251.183
+     command: -server  -bootstrap-expect 3    -data-dir /tmp  -advertise 52.48.82.32  -retry-join 52.57.99.89 -retry-join 35.197.251.183
      image: progrium/consul:latest
      ports:
-       - "8300:8300"
-       - "8400:8400"
-       - "8500:8500"
-       - "8600:8600"
-       - "8301:8301/udp"
-       - "8302:8302/udp"
+       - "8300"
+       - "8400"
+       - "8500"
+       - "8600"
+       - "8301/udp"
+       - "8302/udp"
      environment:
        CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
      network_mode: host
      restart: always
 
    registrator2:
-     command:  -ip= 35.157.253.101 consul://consul2:8500
+     command:  -ip= 52.48.82.32 consul://consul2:8500
      image: gliderlabs/registrator:latest
      links:
        - consul2
