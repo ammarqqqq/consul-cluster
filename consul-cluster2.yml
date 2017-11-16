@@ -27,23 +27,23 @@ services:
      depends_on:
        - consul2
 
-lb2:
-  build: ./lb_org
-  ports:
-    - "443:443"
-  environment:
-    CONSUL_URL: consul:8500
-    restart: always
-    hostname: lb2
-    domainname: monifair.com
-    #extra_hosts:
-    # - "${DNSDOMAIN}:${DNSDOMAINIP}"
+   lb2:
+     build: ./lb_org
+     ports:
+       - "443:443"
+     environment:
+       CONSUL_URL: consul:8500
+     restart: always
+     hostname: lb2
+     domainname: monifair.com
+     extra_hosts:
+       - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
-elk2:
-  build: ./elk
-  ports:
-    - "5601:5601"
-    - "9200:9200"
-    - "5000:5000"
-    - "5044:5044"
-  restart: always
+   elk2:
+     build: ./elk
+     ports:
+       - "5601:5601"
+       - "9200:9200"
+       - "5000:5000"
+       - "5044:5044"
+     restart: always
