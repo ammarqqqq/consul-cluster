@@ -17,7 +17,7 @@ services:
      restart: always
 
    consul-agent2:
-     command: consul agent   -data-dir /tmp  -bind=172.31.42.174  &
+     command: consul agent   -data-dir /tmp  -advertise 172.31.42.174 -bind 172.31.42.174 -client 172.31.42.174 &
      image: progrium/consul:latest
      environment:
        CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
@@ -29,7 +29,7 @@ services:
          - consul
 
    registrator2:
-     command:  -ip=52.48.82.32 consul://consul-agent2:8500
+     command:  -ip=72.31.42.174 consul://consul-agent2:8500
      image: gliderlabs/registrator:latest
      links:
        - consul-agent2
