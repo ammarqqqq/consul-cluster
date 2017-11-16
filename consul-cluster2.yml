@@ -2,8 +2,9 @@ version: '3'
 
 services:
    consul:
-     command: -server -advertise 52.48.82.32 -bootstrap-expect 3    -bind 52.48.82.32 -client 52.48.82.32   -retry-join 52.57.99.89 -retry-join 35.197.251.183
+     command: -server -advertise 52.48.82.32 -bootstrap-expect 3      -retry-join 52.57.99.89 -retry-join 35.197.251.183
      image: progrium/consul:latest
+     container_name: consul
      ports:
        - "8300:8300"
        - "8400:8400"
@@ -19,6 +20,7 @@ services:
    consul-agent:
      command: consul agent   -data-dir /tmp  -advertise 172.31.42.174 -bind 172.31.42.174 -client 172.31.42.174 &
      image: progrium/consul:latest
+     container_name: consul-agent
      environment:
        CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
        CONSUL_CLIENT_INTERFACE: eth0
@@ -29,7 +31,7 @@ services:
          - consul
 
    registrator:
-     command:  -ip=72.31.42.174 consul://consul-agent:8500
+     command:  -ip=172.31.42.174 consul://consul-agent:8500
      image: gliderlabs/registrator:latest
      links:
        - consul-agent
