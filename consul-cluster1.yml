@@ -18,15 +18,8 @@ services:
 
 
   consul-agent1:
-   command: consul agent   -data-dir /tmp  -bind 52.57.99.89  -client 52.57.99.89  
+   command: consul agent   -data-dir /tmp  -bind 52.57.99.89  -client 52.57.99.89
    image: progrium/consul:latest
-   ports:
-     - "8300"
-     - "8400"
-     - "8500"
-     - "8600"
-     - "8301/udp"
-     - "8302/udp"
    environment:
      CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
    network_mode: host
