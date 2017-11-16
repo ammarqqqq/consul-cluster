@@ -17,7 +17,7 @@ services:
     restart: always
 
   consul-agent3:
-    command: consul agent   -data-dir /tmp  -bind=10.154.0.3  -client=10.154.0.3
+    command: consul agent   -data-dir /tmp  -bind=10.154.0.3  -client=10.154.0.3 &
     image: progrium/consul:latest
     environment:
       CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
