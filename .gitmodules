@@ -1,0 +1,6 @@
+[submodule "lb_org"]
+	path = lb_org
+	url = https://github.com/fintechinnovationas/lb_org.git
+[submodule "elk"]
+	path = elk
+	url = https://github.com/fintechinnovationas/elk.git
