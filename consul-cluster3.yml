@@ -18,7 +18,7 @@ services:
     restart: always
 
   consul-agent:
-    command: consul agent   -data-dir /tmp  -advertise 10.154.0.3 -bind 10.154.0.3 -client 10.154.0.3 &
+    command: consul agent   -data-dir /tmp   -bind 10.154.0.3 -client 10.154.0.3 &
     image: progrium/consul:latest
     container_name: consul-agent
     environment:
