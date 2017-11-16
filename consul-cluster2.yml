@@ -16,7 +16,7 @@ services:
      network_mode: host
      restart: always
 
-   consul-agent2:
+   consul-agent:
      command: consul agent   -data-dir /tmp  -advertise 172.31.42.174 -bind 172.31.42.174 -client 172.31.42.174 &
      image: progrium/consul:latest
      environment:
@@ -28,16 +28,16 @@ services:
      depends_on:
          - consul
 
-   registrator2:
-     command:  -ip=72.31.42.174 consul://consul-agent2:8500
+   registrator:
+     command:  -ip=72.31.42.174 consul://consul-agent:8500
      image: gliderlabs/registrator:latest
      links:
-       - consul-agent2
+       - consul-agent
      volumes:
        - "/var/run/docker.sock:/tmp/docker.sock"
      restart: always
      depends_on:
-       - consul-agent2
+       - consul-agent
 
    lb2:
      build: ./lb_org
