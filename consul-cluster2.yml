@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-   consul2:
-     command: -server  -bootstrap-expect 3    -data-dir /tmp  -advertise 52.48.82.32  -retry-join 52.57.99.89 -retry-join 35.197.251.183
+   consul:
+     command: -server  -bootstrap-expect 3   -data-dir /tmp  -advertise 52.48.82.32  -retry-join 52.57.99.89 -retry-join 35.197.251.183
      image: progrium/consul:latest
      ports:
        - "8300"
@@ -17,15 +17,15 @@ services:
      restart: always
 
    registrator2:
-     command:  -ip= 52.48.82.32 consul://consul2:8500
+     command:  -ip= 52.48.82.32 consul://consul:8500
      image: gliderlabs/registrator:latest
      links:
-       - consul2
+       - consul
      volumes:
        - "/var/run/docker.sock:/tmp/docker.sock"
      restart: always
      depends_on:
-       - consul2
+       - consul
 
    lb2:
      build: ./lb_org
