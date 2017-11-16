@@ -16,16 +16,15 @@ services:
      network_mode: host
      restart: always
 
-  consul-agent2:
-    command: consul agent   -data-dir /tmp  -bind=52.48.82.32  -client=52.48.82.32
-    image: progrium/consul:latest
-    environment:
-      CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
-    network_mode: host
-    restart: always
-    depends_on:
-      - consul
-
+   consul-agent2:
+     command: consul agent   -data-dir /tmp  -bind=52.48.82.32  -client=52.48.82.32
+     image: progrium/consul:latest
+     environment:
+       CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
+     network_mode: host
+     restart: always
+     depends_on:
+         - consul
 
    registrator2:
      command:  -ip= 52.48.82.32 consul://consul-agent2:8500
