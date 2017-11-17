@@ -2,7 +2,7 @@ version: '3'
 
 services:
   consul:
-    command: -server  -bootstrap-expect 1  -advertise 52.57.99.89 -retry-join 52.48.82.32 -retry-join 35.197.251.183
+    command: -server  -h ip-172-31-19-131 -bootstrap-expect 3  -advertise 52.57.99.89 -retry-join 52.48.82.32 -retry-join 35.197.251.183
     image: progrium/consul:latest
     container_name: consul
     ports:
@@ -18,25 +18,25 @@ services:
     restart: always
 
 
-#  consul-agent:
-#   command: consul agent   -data-dir /tmp -advertise 172.31.22.85 -bind 172.31.22.85 -client 172.31.22.85 &
-#   image: progrium/consul:latest
-#   container_name: consul-agent
-#   ports:
-#     - "172.31.22.85:8300:8300"
-#     - "172.31.22.85:8400:8400"
-#     - "172.31.22.85:8500:8500"
-#     - "172.31.22.85:8600:8600"
-#     - "172.31.22.85:8301:8301/udp"
-#     - "172.31.22.85:8302:8302/udp"
-#   environment:
-#     CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
-#     CONSUL_CLIENT_INTERFACE: eth0
-#     CONSUL_BIND_INTERFACE: eth0
-#   network_mode: host
-#   restart: always
-#   depends_on:
-#     - consul
+  consul-agent:
+    command: consul agent   -data-dir /tmp -advertise 172.31.22.85 -bind 172.31.22.85 -client 172.31.22.85 &
+    image: progrium/consul:latest
+    container_name: consul-agent
+    ports:
+       - "8300:8300"
+       - "8400:8400"
+       - "8500:8500"
+       - "8600:8600"
+       - "8301:8301/udp"
+       - "8302:8302/udp"
+    environment:
+      CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
+      CONSUL_CLIENT_INTERFACE: eth0
+      CONSUL_BIND_INTERFACE: eth0
+    network_mode: host
+    restart: always
+    depends_on:
+       - consul
 
 #  registrator:
 #    command: -internal -ip=172.31.22.85 consul://consul-agent:8500
