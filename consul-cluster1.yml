@@ -42,8 +42,8 @@ services:
   registrator:
     command:   consul://consul-agent:8500
     image: gliderlabs/registrator:latest
-    links:
-      - consul-agent
+    #links:
+    #  - consul-agent
     volumes:
       - "/var/run/docker.sock:/tmp/docker.sock"
     restart: always
