@@ -2,7 +2,7 @@ version: '3'
 
 services:
   consul:
-    command: -server  -bootstrap-expect 3  -advertise 52.57.99.89 -retry-join 52.48.82.32 -retry-join 35.197.251.183
+    command: -server  -bootstrap  -advertise 52.57.99.89 -retry-join 52.48.82.32 -retry-join 35.197.251.183
     image: progrium/consul:latest
     container_name: consul
     ports:
@@ -23,12 +23,12 @@ services:
    image: progrium/consul:latest
    container_name: consul-agent
    ports:
-     - "172.31.22.85:8300"
-     - "172.31.22.85:8400"
-     - "172.31.22.85:8500"
-     - "172.31.22.85:8600"
-     - "172.31.22.85:8301/udp"
-     - "172.31.22.85:8302/udp"
+     - "172.31.22.85:8300:8300"
+     - "172.31.22.85:8400:8400"
+     - "172.31.22.85:8500:8500"
+     - "172.31.22.85:8600:8600"
+     - "172.31.22.85:8301:8301/udp"
+     - "172.31.22.85:8302:8302/udp"
    environment:
      CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
      CONSUL_CLIENT_INTERFACE: eth0
