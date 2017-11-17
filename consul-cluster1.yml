@@ -2,7 +2,7 @@ version: '3'
 
 services:
   consul:
-    command: -server  -h ip-172-31-22-85 -bootstrap-expect 3 -advertise 52.57.99.89 -retry-join 52.48.82.32 -retry-join 35.197.251.183
+    command: -server  -node ip-172-31-22-85 -bootstrap-expect 3 -advertise 52.57.99.89 -retry-join 52.48.82.32 -retry-join 35.197.251.183
     image: progrium/consul:latest
     container_name: consul
     ports:
