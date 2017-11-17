@@ -40,7 +40,7 @@ services:
        - consul
 
   registrator:
-    command:   consul://consul-agent:8500
+    command: -ip=172.31.22.85  consul://consul-agent:8500
     image: gliderlabs/registrator:latest
     #links:
     #  - consul-agent
