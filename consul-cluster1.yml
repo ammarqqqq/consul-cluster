@@ -19,7 +19,7 @@ services:
 
 
   consul-agent:
-    command: consul agent  -node ip-172-31-22-85  -data-dir /tmp -advertise 172.31.22.85 -bind 172.31.22.85 -client 172.31.22.85 &
+    command: consul agent  -node=ip-172-31-22-85  -bind=172.31.22.85 -client=172.31.22.85 -data-dir /tmp  &
     image: progrium/consul:latest
     container_name: consul-agent
     ports:
