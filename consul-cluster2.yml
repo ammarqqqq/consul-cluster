@@ -17,54 +17,54 @@ services:
      network_mode: host
      restart: always
 
-   consul-agent:
-     command: consul agent   -data-dir /tmp  -bind 172.31.42.174 -client 172.31.42.174 &
-     image: progrium/consul:latest
-     container_name: consul-agent
-     ports:
-       - "172.31.42.174:8300"
-       - "172.31.42.174:8400"
-       - "172.31.42.174:8500"
-       - "172.31.42.174:8600"
-       - "172.31.42.174:8301/udp"
-       - "172.31.42.174:8302/udp"
-     environment:
-       CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
-       CONSUL_CLIENT_INTERFACE: eth0
-       CONSUL_BIND_INTERFACE: eth0
-     network_mode: host
-     restart: always
-     links:
-       - consul
+  # consul-agent:
+  #   command: consul agent   -data-dir /tmp  -bind 172.31.42.174 -client 172.31.42.174 &
+  #   image: progrium/consul:latest
+  #   container_name: consul-agent
+  #   ports:
+  #     - "172.31.42.174:8300"
+  #     - "172.31.42.174:8400"
+  #     - "172.31.42.174:8500"
+  #     - "172.31.42.174:8600"
+  #     - "172.31.42.174:8301/udp"
+  #     - "172.31.42.174:8302/udp"
+  #   environment:
+  #     CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
+  #     CONSUL_CLIENT_INTERFACE: eth0
+  #     CONSUL_BIND_INTERFACE: eth0
+  #   network_mode: host
+  #   restart: always
+  #   links:
+  #     - consul
 
-   registrator:
-     command:  -ip=172.31.42.174 consul://consul-agent:8500
-     image: gliderlabs/registrator:latest
-     links:
-       - consul-agent
-     volumes:
-       - "/var/run/docker.sock:/tmp/docker.sock"
-     restart: always
-     depends_on:
-       - consul-agent
+  # registrator:
+  #   command:  -ip=172.31.42.174 consul://consul-agent:8500
+  #   image: gliderlabs/registrator:latest
+  #   links:
+  #     - consul-agent
+  #   volumes:
+  #     - "/var/run/docker.sock:/tmp/docker.sock"
+  #   restart: always
+  #   depends_on:
+  #     - consul-agent
 
-   lb2:
-     build: ./lb_org
-     ports:
-       - "443:443"
-     environment:
-       CONSUL_URL: consul:8500
-     restart: always
-     hostname: lb2
-     domainname: monifair.com
+  # lb2:
+  #   build: ./lb_org
+  #   ports:
+  #     - "443:443"
+  #   environment:
+  #     CONSUL_URL: consul:8500
+  #   restart: always
+  #   hostname: lb2
+  #   domainname: monifair.com
      #extra_hosts:
       # - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
-   elk2:
-     build: ./elk
-     ports:
-       - "5601:5601"
-       - "9200:9200"
-       - "5000:5000"
-       - "5044:5044"
-     restart: always
+   #elk2:
+   #    build: ./elk
+    #  ports:
+    #   - "5601:5601"
+    #   - "9200:9200"
+    #   - "5000:5000"
+    #   - "5044:5044"
+     #restart: always

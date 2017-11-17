@@ -22,7 +22,7 @@ services:
     image: progrium/consul:latest
     container_name: consul-agent
     ports:
-      - "10.154.0.3:8300"
+      -  [10.154.0.3]:8300"
       - "10.154.0.3:8400"
       - "10.154.0.3:8500"
       - "10.154.0.3:8600"
