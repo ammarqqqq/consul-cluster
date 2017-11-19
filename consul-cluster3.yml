@@ -2,7 +2,7 @@ version: '3'
 
 services:
   consul:
-    command: -server  -advertise 35.197.251.183  -bootstrap-expect 1    -retry-join 52.57.99.89 -retry-join 52.48.82.32
+    command: -server  -advertise 35.197.251.183   -retry-join 52.57.99.89 -retry-join 52.48.82.32
     image: progrium/consul:latest
     container_name: consul
     ports:
@@ -17,24 +17,24 @@ services:
       CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
     restart: always
 
-  consul-agent:
-    command: consul agent   -data-dir /tmp   -bind 10.154.0.3 -client 10.154.0.3 &
-    image: progrium/consul:latest
-    container_name: consul-agent
-    ports:
-      -  [10.154.0.3]:8300"
-      - "10.154.0.3:8400"
-      - "10.154.0.3:8500"
-      - "10.154.0.3:8600"
-      - "10.154.0.3:8301/udp"
-      - "10.154.0.3:8302/udp"
-    environment:
-      CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
-      CONSUL_CLIENT_INTERFACE: eth0
-      CONSUL_BIND_INTERFACE: eth0
-    network_mode: host
-    restart: always
-    links:
+  #consul-agent:
+  #  command: consul agent   -data-dir /tmp   -bind 10.154.0.3 -client 10.154.0.3 &
+  #  image: progrium/consul:latest
+  #  container_name: consul-agent
+  #  ports:
+  #    -  [10.154.0.3]:8300"
+  #    - "10.154.0.3:8400"
+  #    - "10.154.0.3:8500"
+  #    - "10.154.0.3:8600"
+  #    - "10.154.0.3:8301/udp"
+  #    - "10.154.0.3:8302/udp"
+  #  environment:
+  #    CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
+  #    CONSUL_CLIENT_INTERFACE: eth0
+  #    CONSUL_BIND_INTERFACE: eth0
+  #  network_mode: host
+  #  restart: always
+  #  links:
       - consul
 
 
